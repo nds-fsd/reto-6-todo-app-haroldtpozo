@@ -1,0 +1,48 @@
+.tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid rgb(187, 255, 0);
+    border-radius: 10px;
+    max-width: 370px;
+    max-height: 200px;
+}
+
+.fecha span:first-child{
+    font-size: 30px;
+
+}
+
+.fecha{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    
+    border: 2px solid red;
+
+}
+
+.container{
+    display: flex;
+    align-content: center;
+
+    width: 90%;
+}
+
+
+
+
+input{
+    border: none;
+    width: 50%;
+    height: 20%;
+}
+
+button{
+    background-color: transparent;
+    width: 20%;
+    height: 30%;
+    border: none;
+}

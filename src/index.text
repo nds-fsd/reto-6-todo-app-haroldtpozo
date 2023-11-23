@@ -1,0 +1,88 @@
+import "./App.css";
+import { useEffect, useState } from "react";
+function App() {
+  const [todoList, setTodoList] = useState([]);
+  const [titulo, setTitulo] = useState("");
+  const [texto, setTexto] = useState("");
+  const [fecha, setFecha] = useState("");
+  const handlePostClick = () => {
+    fetch("http://localhost:4001/todo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: titulo,
+        fecha: new Date,
+        done: false,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("La respuesta de red no fue correcta.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("respuesta", data);
+        setTodoList([...todoList, data]);
+        setTitulo("");
+        setFecha("");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const respuesta = await fetch("http://localhost:4001/todo");
+        if (!respuesta.ok) {
+          throw new Error("No se pudo obtener la información del servidor");
+        }
+        const datosJson = await respuesta.json();
+        setTodoList(datosJson);
+      } catch (error) {
+        console.error("Error al obtener datos del servidor:", error.message);
+      }
+    };
+    fetchData();
+  }, [todoList]);
+  return (
+    <div className="container">
+      <div>
+        <div>
+          <label>Título:</label>
+          <input
+            type="text"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Texto:</label>
+          <textarea value={texto} onChange={(e) => setTexto(e.target.value)} />
+        </div>
+        <div>
+          <label>Fecha:</label>
+          <input
+            type="text"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+          />
+        </div>
+        <button onClick={handlePostClick}>Enviar POST</button>
+      </div>
+      <div className="todo-list">
+        {todoList.map((todo) => (
+          <div className="card" key={todo.id}>
+            <h2 className="cardTitle">{todo.text}</h2>
+            <p className="cardDate">{todo.fecha}</p>
+            <p className="cardCheck">{todo.done}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+export default App;
