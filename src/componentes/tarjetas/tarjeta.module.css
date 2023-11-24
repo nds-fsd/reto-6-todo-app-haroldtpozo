@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border: 2px solid aqua;
+    border: 2px solid #ff6392;
     border-radius: 10px;
     max-width: 370px;
     max-height: 200px;
@@ -33,7 +33,7 @@
 
 input{
     border: none;
-    width: 50%;
+    width: 57%;
     height: 20%;
 }
 
@@ -45,5 +45,5 @@ button{
 }
 
 img{
-    width: 50px;
+    width: 54px;
 }

@@ -4,8 +4,11 @@ import Tareas from "./componentes/tareas/tareas";
 import { useEffect, useState } from "react";
 function App() {
  
-const [todoList, setTodoList] = useState([]);
-const [done, setDone] = useState(false);
+  const [todoList, setTodoList] = useState([]);
+  const [update, setUpdate] = useState(false)
+
+
+// POST //
 
 const postHandleClick = (titulo, hora, dia ,mes) => {
   const dateNueva = new Date (`${dia}-${mes}-${hora}`);
@@ -43,6 +46,9 @@ const postHandleClick = (titulo, hora, dia ,mes) => {
 
 };
 
+
+
+
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -58,7 +64,7 @@ useEffect(() => {
     }
   };
   fetchData();
-}, []);
+}, [update]);
 
 console.log("Estado actual de todoList:", todoList);
 
@@ -71,7 +77,7 @@ return (
 
 
     <div className="top">
-        <Tarjeta
+        <Tarjeta className="tarjeta-list"
         postHandleClick={postHandleClick}/>
     </div>
 
@@ -79,7 +85,10 @@ return (
     <div className="todo-list">
     {todoList.map((todo) => (
       <Tareas
+        update={update}
+        setUpdate={setUpdate}
         key={todo.id}
+        id={todo.id}
         hora={todo.hora}
         mes={todo.mes}
         dia={todo.dia}
