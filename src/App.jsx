@@ -8,47 +8,6 @@ function App() {
   const [update, setUpdate] = useState(false)
 
 
-// POST //
-
-const postHandleClick = (titulo, hora, dia ,mes) => {
-  const dateNueva = new Date (`${dia}-${mes}-${hora}`);
-  
-  fetch("http://localhost:4000/todo",{
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      text: titulo,
-      hora: dateNueva.getHours(),
-      dia : dateNueva.getDate(),
-      mes: dateNueva.getMonth()+1,
-      done: done,
-      
-    }),
-  })
-  .then ((response)=>{
-    if (!response.ok) {
-      throw new Error("La respuesta de red no fue correcta.");
-      }
-    return response.json();
-  })
-
-  .then ((data)=>{
-    console.log("Respuesta a data",data)
-    setTodoList([...todoList,data]);
-    console.log("Nuevo estado de todoList:", todoList);
-  })
-
-  .catch ((error)=>{
-    console.log("Error",error);
-  })
-
-};
-
-
-
-
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -77,8 +36,10 @@ return (
 
 
     <div className="top">
-        <Tarjeta className="tarjeta-list"
-        postHandleClick={postHandleClick}/>
+        <Tarjeta 
+        todoList={todoList}
+        setTodoList={setTodoList}
+        className="tarjeta-list"/>
     </div>
 
 

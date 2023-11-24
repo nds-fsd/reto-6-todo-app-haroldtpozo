@@ -3,7 +3,7 @@
 import styles from './tarjeta.module.css';
 import {useState } from "react";
 
-const Tarjeta = ({postHandleClick}) => {
+const Tarjeta = ({postHandleClick,todoList,setTodoList}) => {
 
     const [titulo, setTitulo] = useState("");
     const [fecha, setFecha] = useState("");
@@ -20,9 +20,23 @@ const Tarjeta = ({postHandleClick}) => {
             },
             body: JSON.stringify({text : titulo,  hora,   mes ,  dia })
         })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-    }
+        .then ((response)=>{
+            if (!response.ok) {
+              throw new Error("La respuesta de red no fue correcta.");
+              }
+            return response.json();
+          })
+        
+          .then ((data)=>{
+            console.log("Respuesta a data",data)
+            setTodoList([...todoList,data]);
+            console.log("Nuevo estado de todoList:", todoList);
+          })
+        
+          .catch ((error)=>{
+            console.log("Error",error);
+          })
+    };
 
     const handleClick = () => {
         const [fechaCompleta, hora] = fecha.split('T');
