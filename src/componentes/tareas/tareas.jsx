@@ -14,14 +14,32 @@ const Tareas= ({ hora,mes,dia, titulo, done, id, update, setUpdate}) => {
             },
             body : JSON.stringify({done: taskDone })
         })
-        setUpdate(!update)
-    }
+        setUpdate(!update);
+    };
 
+    const handleDeleteTask = async () => {
+
+        await fetch(`http://localhost:4000/todo/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+    
+        setUpdate(!update);
+      };
+    
+
+
+
+
+
+    const tarjetaClassName = taskDone ? styles.tarjetaDone : styles.tarjeta;
 
 
 
     return<>
-        <div className={styles.tarjeta}>
+        <div className={tarjetaClassName}>
         <div className={styles.fecha}>
                 <span>{dia}</span>
                 <span>{mes}</span>
@@ -33,7 +51,7 @@ const Tareas= ({ hora,mes,dia, titulo, done, id, update, setUpdate}) => {
             </div>
         </div>
             <input className={styles.check} type='checkbox' defaultChecked={taskDone} onClick={handleDoneTask}/>
-            <button className={styles.eliminar}><img className={styles.imgEliminar}src="recursos/eliminar.png" alt="eliminar task" /></button>
+            <button onClick={handleDeleteTask} className={styles.eliminar}><img className={styles.imgEliminar}src="recursos/eliminar.png" alt="eliminar task" /></button>
         </div>
         
     </>

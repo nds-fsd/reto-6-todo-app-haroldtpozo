@@ -44,10 +44,11 @@ return (
 
 
     <div className="todo-list">
-    {todoList.map((todo) => (
-      <Tareas
-        update={update}
-        setUpdate={setUpdate}
+    {todoList.length>0? (
+        todoList.map((todo) => (
+    <Tareas
+      update={update}
+      setUpdate={setUpdate}
         key={todo.id}
         id={todo.id}
         hora={todo.hora}
@@ -55,8 +56,14 @@ return (
         dia={todo.dia}
         titulo={todo.text}
         done={todo.done}
-      />
-    ))}
+    />
+    ))
+  ) : (<div>
+    <p>¡No hay tareas pendientes!</p>
+    <img className="bienImg"src="recursos/voto-positivo.png" alt="muy bien" />
+
+
+  </div>)}
     </div>
 
   </div>
